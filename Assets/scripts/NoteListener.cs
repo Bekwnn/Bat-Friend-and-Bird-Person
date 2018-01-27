@@ -32,7 +32,7 @@ public class NoteListener : MonoBehaviour
 
 	public bool DoesPatternMatch(NotePattern pattern)
 	{
-		if (PatternListeningFor == null || pattern.Pattern.Count < PatternListeningFor.Pattern.Count)
+		if (PatternListeningFor == null || pattern.Pattern.Count != PatternListeningFor.Pattern.Count)
 		{
 			return false;
 		}

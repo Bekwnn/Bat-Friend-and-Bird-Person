@@ -19,7 +19,7 @@ public class EditorPatternRecord : MonoBehaviour
 
 	private string lastRecorded;
 
-	private float firstNoteTime;
+	private float firstNoteTime = -1f;
 
 	private NotePattern currentNotePattern;
 
@@ -72,7 +72,7 @@ public class EditorPatternRecord : MonoBehaviour
 					Debug.Log(deadTimePassed);
 					Debug.Log(currentNotePattern.Pattern.Count);
 
-					if (currentNotePattern != null && deadTimePassed > 1f)
+					if (currentNotePattern != null && deadTimePassed > NotePattern.patternEndWindow)
 					{
 						recording = false;
 						recordButtonText.text = "Record";
@@ -116,7 +116,9 @@ public class EditorPatternRecord : MonoBehaviour
 
 		string json = File.ReadAllText(dataPath + lastRecorded + ".json");
 		NotePattern nPattern = JsonUtility.FromJson<NotePattern>(json);
-		//TODO playback audio of pattern.
+
+		PlayNotes notePlayer = GetComponent<PlayNotes>();
+		notePlayer.PlayPattern(nPattern);
 	}
 
 	public void DeleteLast()
