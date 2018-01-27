@@ -1,0 +1,32 @@
+THEME: Transmission
+
+Immediate things that come to mind:
+- radio
+- video messages
+- communication
+- signals
+- lost waves
+- oscilloscope
+- Journey online play (player "pings")
+- networks
+- couriers
+
+- One idea: birds sing a series of notes. The player then has to communicate
+  those notes back.
+	- Platformer? Think geometry dash, platforming relates to the music.
+	- Exploration game? The player explores a world (think FEZ) and has to
+	  communicate with pings to interact with characters, the world,
+	  solve challenges.
+	- Bastion from overwatch? Communication between bird and character to
+	  navigate a dark space. The player inputs to communicate to the bat,
+	  and the bat replies a short while after.
+		- Commands: Reveal, Fetch, Assist (double jump? glide?)
+		- Environment elements activated by a sequence of noises (plays noises,
+		  you repeat back to activate)
+
+TODO:
+basic platforming
+noises and commands (bird/bat's reply is one note higher):
+(do, RE, mi, FA, so, LA, ti, DO)
+OR
+bird/bat's reply is one octave higher
