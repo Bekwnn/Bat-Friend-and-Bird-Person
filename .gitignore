@@ -48,3 +48,6 @@ Session.vim
 *~
 # Auto-generated tag files
 tags
+
+# Assets from Unity store
+Assets/AssetStore/*

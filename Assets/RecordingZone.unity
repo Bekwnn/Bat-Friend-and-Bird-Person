@@ -1530,6 +1530,7 @@ MonoBehaviour:
   fileName: {fileID: 1042153733}
   recordButtonText: {fileID: 1294318165}
   lastRecordedTextDisplay: {fileID: 1007906205}
+  playNotes: {fileID: 1856800142}
   recording: 0
 --- !u!82 &1856800141
 AudioSource:
@@ -1622,8 +1623,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94c64ae36853dc04590ca29f3ff253c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteAClip: {fileID: 0}
-  noteBClip: {fileID: 0}
-  noteCClip: {fileID: 0}
-  noteDClip: {fileID: 0}
+  noteAClip: {fileID: 8300000, guid: 4a5c3fb3c3619db4ba50c739f075edc8, type: 3}
+  noteBClip: {fileID: 8300000, guid: 5d3464504897b7c468f29cb3565dacd4, type: 3}
+  noteCClip: {fileID: 8300000, guid: f1b3f30abc162484ca5e4e2fc2361562, type: 3}
+  noteDClip: {fileID: 8300000, guid: 88f4946e444bb3e4baee3d71f61a6d2f, type: 3}
+  noteParticle: {fileID: 0}
   audioSource: {fileID: 1856800141}

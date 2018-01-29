@@ -11,9 +11,13 @@ public class PlayNotes : MonoBehaviour
 
 	public AudioClip noteDClip;
 
+	public GameObject noteParticle;
+
 	public AudioSource audioSource;
 
 	public NotePattern currentPattern { get; private set; }
+
+	private float curVolume;
 
 	private float firstNoteTime = -1f;
 
@@ -55,20 +59,36 @@ public class PlayNotes : MonoBehaviour
 
 				if (clip != null)
 				{
-					audioSource.PlayOneShot(clip);
-				}	
+					audioSource.PlayOneShot(clip, curVolume);
+					if (noteParticle != null)
+					{
+						Instantiate(noteParticle, transform); //parent to this
+					}
+				}
+
+				currentNoteIdx++;
+				if (currentNoteIdx >= currentPattern.Pattern.Count)
+				{
+					StopPlaying();
+				}
 			}
 		}
 	}
 
 	public void PlayPattern(NotePattern pattern)
 	{
+		PlayPattern(pattern, 1f);
+	}
+
+	public void PlayPattern(NotePattern pattern, float volume)
+	{
 		currentPattern = pattern;
 		firstNoteTime = Time.time;
 		currentNoteIdx = 0;
+		curVolume = volume;
 	}
 
-	private void ResetPlaying()
+	public void StopPlaying()
 	{
 		currentPattern = null;
 		firstNoteTime = -1f;

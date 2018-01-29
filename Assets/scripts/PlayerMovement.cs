@@ -3,11 +3,24 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-	private static readonly float groundedDistanceCheck = 1f;
-
 	public float speed = 4f;
 
+	public float jumpVelocity = 10f;
+
+	public float groundedDistanceCheck = 1f;
+
 	private bool isAirborne = true;
+
+	private Rigidbody rigidbody;
+
+	private int groundedRaycastLayerMask;
+
+	void Awake()
+	{
+		rigidbody = GetComponent<Rigidbody>();
+		// Defaults minus the Player layer.
+		groundedRaycastLayerMask = Physics.DefaultRaycastLayers - (1 << LayerMask.NameToLayer("Player"));
+	}
 
 	void Update()
 	{
@@ -22,22 +35,28 @@ public class PlayerMovement : MonoBehaviour
 
 		if (Input.GetButtonDown("Jump") && !isAirborne)
 		{
-			//TODO jump.
+			rigidbody.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
 		}
 	}
 
 	private void CheckGrounded()
 	{
 		RaycastHit hit;
-
-		if (Physics.Raycast(transform.position, Vector3.down * groundedDistanceCheck, out hit))
+		
+		if (Physics.Raycast(transform.position, Vector3.down, out hit, groundedDistanceCheck, groundedRaycastLayerMask))
 		{
-			//TODO
+			isAirborne = false;
 		}
+		else
+		{
+			isAirborne = true;
+		}
+
+		Color lineColor = (isAirborne)? Color.red : Color.white;
 	}
 
 	private void MoveRight(float val)
 	{
-		transform.position += Vector3.right * val * speed;
+		transform.position += Vector3.right * val * speed * Time.deltaTime;
 	}
 }

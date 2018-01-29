@@ -3,25 +3,17 @@ using UnityEngine;
 
 public class PlayerNoteCreator : NoteCreator
 {
-	public AudioClip noteAClip;
+	public PlayNotes playNotes;
 
-	public AudioClip noteBClip;
-
-	public AudioClip noteCClip;
-
-	public AudioClip noteDClip;
-
-	public AudioSource audioSource;
-
-	private NotePattern currentNotePattern;
+	public NotePattern currentNotePattern { get; private set; }
 
 	private float firstNoteTime = -1f;
 
 	void Reset()
 	{
-		if (audioSource == null)
+		if (playNotes == null)
 		{
-			audioSource = GetComponent<AudioSource>();
+			playNotes = GetComponent<PlayNotes>();
 		}
 	}
 
@@ -32,22 +24,22 @@ public class PlayerNoteCreator : NoteCreator
 		if (Input.GetButtonDown("NoteA"))
 		{
 			inputNote = Note.NoteA;
-			audioSource.PlayOneShot(noteAClip);
+			playNotes.PlayPattern(NotePattern.soloA);
 		}
 		else if (Input.GetButtonDown("NoteB"))
 		{
 			inputNote = Note.NoteB;
-			audioSource.PlayOneShot(noteBClip);
+			playNotes.PlayPattern(NotePattern.soloB);
 		}
 		else if (Input.GetButtonDown("NoteC"))
 		{
 			inputNote = Note.NoteC;
-			audioSource.PlayOneShot(noteCClip);
+			playNotes.PlayPattern(NotePattern.soloC);
 		}
 		else if (Input.GetButtonDown("NoteD"))
 		{
 			inputNote = Note.NoteD;
-			audioSource.PlayOneShot(noteDClip);
+			playNotes.PlayPattern(NotePattern.soloD);
 		}
 	
 		if (inputNote != Note.NONOTE)
@@ -74,6 +66,8 @@ public class PlayerNoteCreator : NoteCreator
 
 				if (currentNotePattern != null && deadTimePassed > NotePattern.patternEndWindow)
 				{
+					NotifyListenersOfPattern(currentNotePattern);
+
 					firstNoteTime = -1f;
 
 					currentNotePattern = null;

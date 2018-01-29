@@ -4,13 +4,19 @@ using UnityEngine.Events;
 using System.IO;
 using System;
 
+[Serializable]
+public class NotePatternEvent : UnityEvent<NotePattern>
+{
+
+}
+
 public class NoteListener : MonoBehaviour
 {
 	public string patternFile;
 
 	public float listenRadius = 5f;
 
-	public UnityEvent onMatchingNotes;
+	public NotePatternEvent onMatchingNotes;
 
 	public NotePattern PatternListeningFor { get; set; }
 
@@ -20,12 +26,12 @@ public class NoteListener : MonoBehaviour
 		{
 			try
 			{
-				string patternJson = File.ReadAllText(NotePattern.patternFilePath + patternFile);
+				string patternJson = File.ReadAllText(NotePattern.patternFilePath + patternFile + ".json");
 				PatternListeningFor = JsonUtility.FromJson<NotePattern>(patternJson);
 			}
 			catch (Exception e)
 			{
-				Debug.Log("Failed to open " + NotePattern.patternFilePath + patternFile + ", error: " + e.Message);
+				Debug.Log("Failed to open " + NotePattern.patternFilePath + patternFile + ".json" + ", error: " + e.Message);
 			}	
 		}
 	}
@@ -49,9 +55,9 @@ public class NoteListener : MonoBehaviour
 			}
 		}
 
-		if (onMatchingNotes != null)
+		if (onMatchingNotes != null && matches)
 		{
-			onMatchingNotes.Invoke();
+			onMatchingNotes.Invoke(pattern);
 		}
 
 		return matches;

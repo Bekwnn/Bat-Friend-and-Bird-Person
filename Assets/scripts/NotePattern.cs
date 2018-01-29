@@ -38,6 +38,22 @@ public class NotePattern
 
 	public static readonly float halfNoteWindow = 0.2f;
 
+	public static NotePattern soloA = new NotePattern(new List<NoteStamp> {
+			new NoteStamp { note = Note.NoteA, time = 0f }
+			});
+
+	public static NotePattern soloB = new NotePattern(new List<NoteStamp> {
+			new NoteStamp { note = Note.NoteB, time = 0f }
+			});
+
+	public static NotePattern soloC = new NotePattern(new List<NoteStamp> {
+			new NoteStamp { note = Note.NoteC, time = 0f }
+			});
+
+	public static NotePattern soloD = new NotePattern(new List<NoteStamp> {
+			new NoteStamp { note = Note.NoteD, time = 0f }
+			});
+
 	public NotePattern(List<NoteStamp> noteSequence)
 	{
 		Pattern = noteSequence;

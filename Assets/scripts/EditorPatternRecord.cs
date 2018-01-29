@@ -14,6 +14,8 @@ public class EditorPatternRecord : MonoBehaviour
 
 	public Text lastRecordedTextDisplay;
 
+	public PlayNotes playNotes;
+
 	[HideInInspector]
 	public bool recording = false;
 
@@ -22,6 +24,14 @@ public class EditorPatternRecord : MonoBehaviour
 	private float firstNoteTime = -1f;
 
 	private NotePattern currentNotePattern;
+
+	void Reset()
+	{
+		if (playNotes == null)
+		{
+			playNotes = GetComponent<PlayNotes>();
+		}
+	}
 
 	void Update()
 	{
@@ -33,18 +43,22 @@ public class EditorPatternRecord : MonoBehaviour
 			if (Input.GetButtonDown("NoteA"))
 			{
 				inputNote = Note.NoteA;
+				playNotes.PlayPattern(NotePattern.soloA);
 			}
 			else if (Input.GetButtonDown("NoteB"))
 			{
 				inputNote = Note.NoteB;
+				playNotes.PlayPattern(NotePattern.soloB);
 			}
 			else if (Input.GetButtonDown("NoteC"))
 			{
 				inputNote = Note.NoteC;
+				playNotes.PlayPattern(NotePattern.soloC);
 			}
 			else if (Input.GetButtonDown("NoteD"))
 			{
 				inputNote = Note.NoteD;
+				playNotes.PlayPattern(NotePattern.soloD);
 			}
 
 			if (inputNote != Note.NONOTE)
@@ -78,13 +92,24 @@ public class EditorPatternRecord : MonoBehaviour
 						recordButtonText.text = "Record";
 						firstNoteTime = -1f;
 
-						// Save currentNotePattern.
 						string json = JsonUtility.ToJson(currentNotePattern);
-						File.WriteAllText(dataPath + fileName.text + ".json", json);
-						lastRecorded = fileName.text;
-						lastRecordedTextDisplay.text = lastRecorded;
-
 						currentNotePattern = null;
+
+						// Save currentNotePattern.
+						if (fileName.text != null || fileName.text != "")
+						{
+							try
+							{
+								File.WriteAllText(dataPath + fileName.text + ".json", json);
+								lastRecorded = fileName.text;
+								lastRecordedTextDisplay.text = lastRecorded;
+							}
+							catch (Exception e)
+							{
+								Debug.Log("Failed to save pattern " + NotePattern.patternFilePath + fileName.text +
+										", error: " + e.Message);
+							}
+						}
 					}
 				}
 			}
@@ -117,8 +142,8 @@ public class EditorPatternRecord : MonoBehaviour
 		string json = File.ReadAllText(dataPath + lastRecorded + ".json");
 		NotePattern nPattern = JsonUtility.FromJson<NotePattern>(json);
 
-		PlayNotes notePlayer = GetComponent<PlayNotes>();
-		notePlayer.PlayPattern(nPattern);
+		PlayNotes playNotes = GetComponent<PlayNotes>();
+		playNotes.PlayPattern(nPattern);
 	}
 
 	public void DeleteLast()
